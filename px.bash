@@ -38,7 +38,8 @@ envdir="$HOME/.px/$env"
 #   helper function for setting up environment
 setup_env_vars () {
     source "$envdir/bin/activate"
-    export PYTHONPATH="$envdir/lib/python3.13/site-packages${PYTHONPATH+:}:${PYTHONPATH}"
+    local pyver=$(python --version 2>&1 | sed -e 's/Python //' -e 's/\.[0-9]*$//')
+    export PYTHONPATH="$envdir/lib/python${pyver}/site-packages${PYTHONPATH+:}${PYTHONPATH}"
     export PIP_PREFIX="$envdir"
     export UV_TOOL_BIN_DIR="$envdir/bin"
     export UV_TOOL_DIR="$envdir/lib/uv"
