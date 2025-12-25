@@ -55,10 +55,9 @@ case "$1" in
         echo "++ creating \"$envdir\""
         mkdir -p "$envdir/bin" "$envdir/lib" || \
             fatal "failed to create environment directory"
-        python=`which python 2>/dev/null`
-        if [ ".$python" = . ]; then
-            echo "ERROR: Python not in PATH" 1>&2
-            exit 1
+        python=$(command -v python 2>/dev/null)
+        if [[ -z $python ]]; then
+            fatal "Python not in PATH"
         fi
         python -m venv "$envdir"
         setup_env_vars
