@@ -59,10 +59,13 @@ case "$1" in
         if [[ -z $python ]]; then
             fatal "Python not in PATH"
         fi
-        python -m venv "$envdir"
+        python -m venv "$envdir" || \
+            fatal "failed to create virtual environment"
         setup_env_vars
-        pip install -U pipx
-        pip install -U uv
+        pip install -U pipx || \
+            fatal "failed to install pipx"
+        pip install -U uv || \
+            fatal "failed to install uv"
         ;;
 
     --destroy )
