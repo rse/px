@@ -54,22 +54,14 @@ case "$1" in
         echo "++ creating \"$envdir\""
         mkdir -p "$envdir/bin" "$envdir/lib" || \
             fatal "failed to create environment directory"
-
-        #   determine Python runtime
         python=`which python 2>/dev/null`
         if [ ".$python" = . ]; then
             echo "ERROR: Python not in PATH" 1>&2
             exit 1
         fi
-
-        #   create virtual environment (already contains PIP)
         python -m venv "$envdir"
         setup_env_vars
-
-        #   install PIPX
         pip install -U pipx
-
-        #   install UV/UVX
         pip install -U uv
         ;;
 
@@ -91,8 +83,6 @@ case "$1" in
         if [[ ! -d $envdir ]]; then
             fatal "environment \"$env\" does not exist"
         fi
-
-        #   for all installed packages/tools...
         setup_env_vars
         pip list --format=freeze 2>/dev/null | while IFS="==" read -r pkg version; do
             version=$(echo "$version" | sed  -e "s/^=//")
@@ -119,8 +109,6 @@ case "$1" in
         if [[ ! -d $envdir ]]; then
             fatal "environment \"$env\" does not exist"
         fi
-
-        #   for all installed packages/tools...
         setup_env_vars
         pip list --outdated --format=columns | tail -n +3 | while read -r pkg version_old version_new _; do
             echo "px: INFO: package $pkg $version_old -- updating to $version_new"
