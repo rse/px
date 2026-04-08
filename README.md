@@ -62,9 +62,15 @@ $ px tool uv tool install mistral-vibe
 # (https://github.com/batrachianai/toad)
 $ px tool uv tool install -U batrachian-toad
 
+# install Aider
+# (https://aider.chat)
+$ px tool uv pip install audioop-lts
+$ px tool uv tool install -U aider-chat
+
 # use the tools
 $ px tool vibe [...]
 $ px tool toad [...]
+$ px tool aider [...]
 ```
 
 See Also
